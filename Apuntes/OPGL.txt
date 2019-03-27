@@ -1,0 +1,51 @@
+(SESSION) 
+27/03/2019 
+
+https://learnopengl.com/
+
+Vertex Data[] -> Vertex Shader -> Shape Assembly -> Geometry Shader -> Rasteritzacion -> Fragment Shader -> Test Blending ; 
+
+Vertex Data es un conjunto de puntos dentro de un array 
+Vertex Shader interpreta los puntos y los pinta de la manera que se deva pintar  
+Geometry Shader Permite crear puntos y asi tiene ya los puntos necesarios para pintarlos 
+como se tiene que pintar lo hace el Fragment Shader. 
+Test Blending 
+
+primero tenemos que darle la informacion que necesitara para pintar  
+
+
+palabritas : 
+-> Primitiva  = un modo para que pinte los puntos y los una
+-> GL_TRIANGLE = Dado tres puntos hace un triangulo 
+-> GL_TRIANGLE_FAN = Hara como si fuera un abanico haciendo un punto inicial 
+-> CL_TRIANGLE_STRIP= usara la ultima linea para dibujar otro tirangulo 
+-> GL_POINTS = Pinta solo puntos  (puedes darle grosor ) 
+-> GL_LINE_STRIP = Solo une puntos  (puedes darle grosor) 
+-> Fragment "Pixel" pero es mas que un pixel ya que tiene profndidad 
+
+if is shader u can change in the machine ( pc ) the others a
+
+GLSL -> OpenGLShadingLanguage
+NDC =  normalized device coordenades  ( estan entre -1.0 y 1.0 )
+
+
+VAO ->Vertex Array Object<- Es para saber como son los inputs de nuestros vertex 
+
+
+VBO => ( Vertex buffer object)<- es el objeto que contiene el Vertex Data[]
+
+
+TO DO => 
+
+1- mainTriangleColor
+2- Pintar el simbolo de la trifuerza con un solo VAO 
+3- Pinta un cuadrado 
+4- Pinta trifuerza con solo hilos  
+5- pinta un cuadrado solo con hilos  
+6- hacer 3 shaders distintos con la trifuerza pero cada triangulo de un color distinto 
+7- tres shaders con la trifuerza de tres colores pero que a cada segundo cambie el color  
+
+<=F TO DO 
+
+// in next session is explained :) 
+EBO = 
