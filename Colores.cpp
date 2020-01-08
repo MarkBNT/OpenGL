@@ -1,11 +1,11 @@
 //Using SDL, SDL OpenGL, GLEW, standard IO, and strings
 #include <SDL.h>
-#include "gl\glew.h"
+#include "Libs/glew/include/GL/glew.h"
 #include "SDL_opengl.h"
-
-#include <iostream>
+#include <cmath>
+#include <string>
 #include <fstream>
-
+#include <iostream>
 //Screen dimension constants
 const int SCREEN_WIDTH = 640;
 const int SCREEN_HEIGHT = 480;
@@ -29,15 +29,8 @@ void close();
 SDL_Window* gWindow = NULL;
 
 //OpenGL context
-SDL_GLContext gContext;
-
-// TO DO : Declare IDs for a VAO and a VBO
-
-unsigned int VAO, VBO; 
-
-// TO DO : Declare Shader variables
-
-int vertexShader, fragmentShader, shaderProgram; 
+// TO DO: Declare SDL var for context
+SDL_GLContext contexto;
 
 bool init()
 {
@@ -58,7 +51,7 @@ bool init()
 		SDL_GL_SetAttribute(SDL_GL_CONTEXT_PROFILE_MASK, SDL_GL_CONTEXT_PROFILE_CORE);
 
 		//Create window
-		gWindow = SDL_CreateWindow("LOL", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, SCREEN_WIDTH, SCREEN_HEIGHT, SDL_WINDOW_OPENGL | SDL_WINDOW_SHOWN);
+		gWindow = SDL_CreateWindow("SDL Tutorial", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, SCREEN_WIDTH, SCREEN_HEIGHT, SDL_WINDOW_OPENGL | SDL_WINDOW_SHOWN);
 		if (gWindow == NULL)
 		{
 			printf("Window could not be created! SDL Error: %s\n", SDL_GetError());
@@ -67,30 +60,26 @@ bool init()
 		else
 		{
 			//Create context
-			gContext = SDL_GL_CreateContext(gWindow);
-			if (gContext == NULL)
+			// TO DO: Create context with SDL and verify if context has been created
+			contexto = SDL_GL_CreateContext(gWindow);
+			if (contexto == NULL)
 			{
 				printf("OpenGL context could not be created! SDL Error: %s\n", SDL_GetError());
 				success = false;
 			}
 			else
 			{
-				//Initialize GLEW
+				//// TO DO: Initialize GLEW
 				glewExperimental = GL_TRUE;
-				GLenum glewError = glewInit();
-				if (glewError != GLEW_OK)
-				{
-					printf("Error initializing GLEW! %s\n", glewGetErrorString(glewError));
+				GLenum err = glewInit();
+				if (GLEW_OK != err) {
+					printf("Error: %s\n", glewGetErrorString(err));
 				}
-
 				//Use Vsync
 				if (SDL_GL_SetSwapInterval(1) < 0)
 				{
 					printf("Warning: Unable to set VSync! SDL Error: %s\n", SDL_GetError());
 				}
-
-				initGL();
-
 			}
 		}
 	}
@@ -98,57 +87,80 @@ bool init()
 	return success;
 }
 
-void initGL()
-{
-	// TO DO : Declare shaders code (Vertex and Fragment) use char* or strings
-	
-	vertexShader = glCreateShader(GL_VERTEX_SHADER); 
-	fragmentShader = glCreateShader(GL_FRAGMENT_SHADER); 
+int _Colores = 0;
+float color = 0;
+float argoh = 0;
+bool estadoRojo = false;
 
-	// TO DO : Declare vertex data
-
-	float vertices[] = {
-		-0.5f, -0.5f,0.0f,
-		0.5f, -0.5f,0.0f,
-		0.0f, 0.5f,0.0f
-
-	};
-
-	// TO DO : Initialize clear color
-
-
-
-	// TO DO : Create Vertex Shader, compile and check for errors
-
-	// TO DO : Create Fragment Shader, compile and check for errors
-
-	// TO DO : Link Shaders on a Shader Program and check for errors
-
-	// TO DO : Delete Shader objects (fragment and Vertex).
-
-	// TO DO : Generate VAO and inside it VBO. Enable Attribute and UnBind VAO after process
-
-}
 
 void update()
 {
+	color = sin(argoh);
+	color = color + 1;
+	color = color / 2;
+
+	if (color <= 0.001f)
+	{
+		_Colores += 1;
+
+		if (_Colores > 2)
+		{
+			_Colores = 0;
+		}
+	}
+
+
+	if (estadoRojo == true) {
+		argoh = argoh - 0.01;
+		std::cout << color << std::endl;
+		if (argoh <= 0) {
+			estadoRojo = false;
+
+
+		}
+	}
+	else {
+		argoh = argoh + 0.01;
+		std::cout << color << std::endl;
+		if (argoh >= 6.28) {
+			estadoRojo = true;
+
+		}
+	}
+
+
+
+
 	//No per frame update needed
 }
 
 void render()
 {
-	//TO DO : Clear color buffer
+	glClear(GL_COLOR_BUFFER_BIT);
+	switch (_Colores)
+	{
+	case 0:
+		glClearColor(color, 0, 0, 0);
 
-	// TO DO : Use Shader, Bind VAO and Paint
+		break;
+	case 1:
+		glClearColor(0, color, 0, 0);
 
-	// TO DO : UnBind VAO and Shader Program
+		break;
+	case 2:
+		glClearColor(0, 0, color, 0);
+
+		break;
+
+	}
+
+
+
 
 }
 
 void close()
 {
-	//TO DO : Clear data in GPU
-
 	//Destroy window	
 	SDL_DestroyWindow(gWindow);
 	gWindow = NULL;
@@ -189,11 +201,12 @@ int main(int argc, char* args[])
 					quit = true;
 				}
 			}
-
+			update();
 			//Render quad
 			render();
 
 			//Update screen
+			// TO DO: Add SDL command to update OpenGL Window
 			SDL_GL_SwapWindow(gWindow);
 		}
 	}

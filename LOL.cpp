@@ -33,11 +33,7 @@ SDL_GLContext gContext;
 
 // TO DO : Declare IDs for a VAO and a VBO
 
-unsigned int VAO, VBO; 
-
 // TO DO : Declare Shader variables
-
-int vertexShader, fragmentShader, shaderProgram; 
 
 bool init()
 {
@@ -101,22 +97,10 @@ bool init()
 void initGL()
 {
 	// TO DO : Declare shaders code (Vertex and Fragment) use char* or strings
-	
-	vertexShader = glCreateShader(GL_VERTEX_SHADER); 
-	fragmentShader = glCreateShader(GL_FRAGMENT_SHADER); 
 
 	// TO DO : Declare vertex data
 
-	float vertices[] = {
-		-0.5f, -0.5f,0.0f,
-		0.5f, -0.5f,0.0f,
-		0.0f, 0.5f,0.0f
-
-	};
-
 	// TO DO : Initialize clear color
-
-
 
 	// TO DO : Create Vertex Shader, compile and check for errors
 
