@@ -199,8 +199,21 @@ void initGL()
 
 	glGenVertexArrays(1, &VAO); 
 
+	glGenBuffers(1, &VBO);
 
+	glBindVertexArray(VAO); 
 
+	glBindBuffer(GL_ARRAY_BUFFER, VBO); 
+
+	glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
+
+	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void*)0); 
+
+	glEnableVertexAttribArray(0);
+
+	glBindBuffer(GL_ARRAY_BUFFER, 0); 
+
+	glBindVertexArray(0);
 }
 
 void update()
@@ -212,7 +225,15 @@ void render()
 {
 	//TO DO : Clear color buffer
 
+	glClear(GL_COLOR_BUFFER_BIT);
+
 	// TO DO : Use Shader, Bind VAO and Paint
+
+	glUseProgram(shaderProgram); 
+
+	glBindVertexArray(VAO); 
+
+	glDrawArrays(GL_TRIANGLES, 0, 3);
 
 	// TO DO : UnBind VAO and Shader Program
 
