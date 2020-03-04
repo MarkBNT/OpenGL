@@ -11,7 +11,7 @@
 //Game 
 
 #include"VideoManager.h"; 
-
+#include"Input.h";
 
 
 //Defines

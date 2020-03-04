@@ -79,10 +79,16 @@ bool VideoManager::init()
 
 void VideoManager::update()
 {
+
+
+	glClearColor(0, 0, 0, 1.0f); 
+
 }
 
 void VideoManager::render()
 {
+	glClear(GL_COLOR_BUFFER_BIT);
+
 }
 
 void VideoManager::quit()
